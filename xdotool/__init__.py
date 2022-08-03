@@ -361,7 +361,19 @@ class XDoTool():
             self.xdotool_cmd.format( **_xdotool_cmd )
             )
 
-        
+    def window_focus(
+        self, 
+        window,
+        sync = False,
+        ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "windowfocus"
+        if sync:
+            _xdotool_cmd[ "options" ] = "--sync"
+        _xdotool_cmd[ "args" ] = f"{window}"
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
 
 
     # Desktop and Window Commands

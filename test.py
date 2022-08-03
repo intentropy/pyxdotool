@@ -22,16 +22,7 @@ if __name__ == '__main__':
 
         # Run xdotool test
         window = xdt.get_window_focus()
-        print( xdt.get_window_geometry(window))
-        sleep( 3 )
-        xdt.window_size( window , 200 , 200 )
-        print( xdt.get_window_geometry(window))
-        sleep( 1 )
-        xdt.window_move(window , 40 , 40 , sync = True)
-        sleep( 1 )
-        xdt.window_move(window , 40 , 40 , sync = True , relative = True )
-        sleep( 1 )
-        xdt.window_move(window , 0 , 0 )
+        print( xdt.window_focus( window ) )
 
 
         # input pause for shutdown
