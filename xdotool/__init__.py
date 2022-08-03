@@ -208,6 +208,42 @@ class XDoTool():
                 self.key( "\n" )
 
     # Mouse Commands
+    def mouse_restore( self , sync = False ):
+        """Restore mouse to previous position"""
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "mousemove"
+        if sync:
+            _xdotool_cmd[ "options" ] = "--sync"
+        _xdotool_cmd[ "args" ] = "restore"
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
+
+    def mouse_move(
+        self,
+        x,              y,
+        window = None,  screen = None,
+        polar = False,  clearmodifiers = False, sync = False,
+        ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "mousemove"
+        _options = []
+        if window is not None:
+            _options.append( f"--window {window}" )
+        if screen is not None:
+            _options.append( f"--screen {screen}" )
+        if polar:
+            _options.append( "--polar" )
+        if clearmodifiers:
+            _options.append( "--clearmodifiers" )
+        if sync:
+            _options.append( "--sync" )
+        _xdotool_cmd[ "options" ] = " ".join( _options )
+        _xdotool_cmd[ "args" ] = f"{x} {y}"
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
+
 
 
     # Window Commands
@@ -501,6 +537,7 @@ class XDoTool():
             self.xdotool_cmd.format( **_xdotool_cmd )
             )
 
-    # Miscellaneous Commands 
-
-        
+    # Miscellaneous Commands
+    """Miscellaneous Commands are being skipped for now
+    as there are already core python functions that handle
+    executing commands and sleep"""
