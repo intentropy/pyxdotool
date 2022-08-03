@@ -22,7 +22,9 @@ if __name__ == '__main__':
 
         # Run xdotool test
         window = xdt.get_window_focus()
-        print( xdt.window_focus( window ) )
+        sleep( 1 )
+        xdt.window_close(window)
+
 
 
         # input pause for shutdown

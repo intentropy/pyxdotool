@@ -266,6 +266,8 @@ class XDoTool():
         The following commands are currently being skipped:
             - selectwindow
             - behave
+            - windowraise
+            - windowparent
 
         These are being skipped because it does not fit my
         personal use case for this module.  They will eventually be added in
@@ -370,11 +372,32 @@ class XDoTool():
         _xdotool_cmd[ "command" ] = "windowfocus"
         if sync:
             _xdotool_cmd[ "options" ] = "--sync"
-        _xdotool_cmd[ "args" ] = f"{window}"
+        _xdotool_cmd[ "args" ] = window
         return _cmd(
             self.xdotool_cmd.format( **_xdotool_cmd )
             )
 
+    def window_map(
+        self, 
+        window,
+        sync = False,
+        ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "windowmap"
+        if sync:
+            _xdotool_cmd[ "options" ] = "--sync"
+        _xdotool_cmd[ "args" ] = window
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
+
+    def window_close( self , window ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "windowclose"
+        _xdotool_cmd[ "args" ] = window
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
 
     # Desktop and Window Commands
     def window_activate( self , window , sync = True ):
