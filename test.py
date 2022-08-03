@@ -21,7 +21,12 @@ if __name__ == '__main__':
         input( "Press ENTER to start tests" )
 
         # Run xdotool test
-        print( xdt.get_window_focus( no_wm_class=True) )
+        window = xdt.get_window_focus()
+        print( xdt.get_window_geometry(window))
+        sleep( 3 )
+        xdt.window_size( window , 200 , 200 )
+        print( xdt.get_window_geometry(window))
+
 
         # input pause for shutdown
         input( "Press ENTER to shutdown test" )

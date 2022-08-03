@@ -324,6 +324,24 @@ class XDoTool():
                 stderr = False,
                 )
             )
+
+    def window_size(
+        self, 
+        window,             width,          height, 
+        use_hints = False,  sync = False,
+        ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "windowsize"
+        _options = []
+        if use_hints:
+            _options.append( "--usehints" )
+        if sync:
+            _options.append( "--sync" )
+        _xdotool_cmd[ "options" ] = " ".join( _options )
+        _xdotool_cmd[ "args" ] = f"{window} {width} {height}"
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
         
 
 
