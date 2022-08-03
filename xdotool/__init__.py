@@ -283,6 +283,14 @@ class XDoTool():
                 )
             )
 
+    def get_window_name( self , window ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "getwindowname"
+        _xdotool_cmd[ "args" ] = window
+        return _cmd_out(
+            self.xdotool_cmd.format( **_xdotool_cmd ),
+            stderr = False,
+            )
 
 
 

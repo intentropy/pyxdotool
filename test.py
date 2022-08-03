@@ -23,7 +23,9 @@ if __name__ == '__main__':
         # Run xdotool test
         window = xdt.get_active_window()
         pid = xdt.get_window_pid( window )
+        name = xdt.get_window_name( window )
         print( pid )
+        print( name )
 
         # input pause for shutdown
         input( "Press ENTER to shutdown test" )
