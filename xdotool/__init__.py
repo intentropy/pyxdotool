@@ -309,9 +309,22 @@ class XDoTool():
                     _line_split[ 0 ].lower()
                     ] = _line_split[ 1 ]
         return _ret
+
+
+    def get_window_focus( self , no_wm_class = False ):
+        """Get the window ID of the current window in focus.
+        no_wm_class will set the -f option.  See man XDOTOOL(1)"""
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "getwindowfocus"
+        if no_wm_class:
+            _xdotool_cmd[ "options" ] = "-f"
+        return int(
+            _cmd_out(
+                self.xdotool_cmd.format( **_xdotool_cmd ),
+                stderr = False,
+                )
+            )
         
-
-
 
 
     # Desktop and Window Commands
