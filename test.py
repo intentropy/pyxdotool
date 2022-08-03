@@ -21,12 +21,9 @@ if __name__ == '__main__':
         input( "Press ENTER to start tests" )
 
         # Run xdotool test
-        xdt.key_opts[ "clearmodifiers" ] = True
-        xdt.type_strings( "test" , "foobar" , newlines = True )
-
-        search_result = xdt.search( '[Mm]ousepad' , match_all = True )
-        print( search_result )
-
+        window = xdt.get_active_window()
+        pid = xdt.get_window_pid( window )
+        print( pid )
 
         # input pause for shutdown
         input( "Press ENTER to shutdown test" )

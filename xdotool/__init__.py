@@ -261,6 +261,30 @@ class XDoTool():
                     )
         return _ret
 
+    # Skipped Window commands
+    """
+        The following commands are currently being skipped:
+            - selectwindow
+            - behave
+
+        These are being skipped because it does not fit my
+        personal use case for this module.  They will eventually be added in
+    """
+
+    def get_window_pid( self , window ):
+        """Return the pid for a windows process"""
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "getwindowpid"
+        _xdotool_cmd[ "args" ] = window
+        return int(
+            _cmd_out(
+                self.xdotool_cmd.format( **_xdotool_cmd ),
+                stderr = False,
+                )
+            )
+
+
+
 
     # Desktop and Window Commands
     def window_activate( self , window , sync = True ):
