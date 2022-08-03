@@ -130,13 +130,8 @@ class XDoTool():
     def __exit__( self , *exception ):
         return
 
-    # testing functions
-    def cmd_out( self , command , stderr = None ):
-        print( 
-            _cmd_out( command , stderr )
-            )
 
-    # Key commands
+    # Keyboard commands
     """
         *args is a list of keys or strings to use for the command
         key up and down will hold or release all of the keys in args
@@ -213,6 +208,58 @@ class XDoTool():
                 self.key( "\n" )
 
     # Mouse Commands
+
+
+    # Window Commands
+    def search( 
+        self,                   pattern,
+        match_class = False,    match_classname = False,    match_name = False,
+        match_all = False,      match_any = False,
+        maxdepth = None,        pid = None,                 screen = None,
+        desktop = None,         limit = None,               
+        only_visible = False,   sync = False,
+        ):
+        """Search for windows.  Returns a list of window ids for all matches found"""
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "search"
+        _options = []
+        if match_class:
+            _options.append( "--class" )
+        if match_classname:
+            _options.append( "--classname" )
+        if match_name:
+            _options.append( "--name" )
+        if match_all:
+            _options.append( f"--all" )
+        if match_any:
+            _options.append( f"--any" )
+        if maxdepth is not None:
+            _options.append( f"--maxdepth {maxdepth}" )
+        if pid is not None:
+            _options.append( f"--pid {pid}" )
+        if screen is not None:
+            _options.append( f"--screen {screen}" )
+        if desktop is not None:
+            _options.append( f"--desktop {desktop}" )
+        if limit is not None:
+            _options.append( f"--limit {limit}" )
+        if only_visible:
+            _options.append( "--onlyvisible" )
+        if sync:
+            _options.append( "--sync" )
+        _xdotool_cmd[ "options "] = " ".join( _options )
+        _xdotool_cmd[ "args" ] = pattern
+        _cmd_ret =  _cmd_out(
+            self.xdotool_cmd.format( **_xdotool_cmd ),
+            stderr = False,
+            ).split( "\n" )
+        _ret = []
+        for line in _cmd_ret:
+            if line:
+                _ret.append(
+                    int( line )
+                    )
+        return _ret
 
 
     # Desktop and Window Commands

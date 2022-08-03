@@ -24,6 +24,9 @@ if __name__ == '__main__':
         xdt.key_opts[ "clearmodifiers" ] = True
         xdt.type_strings( "test" , "foobar" , newlines = True )
 
+        search_result = xdt.search( '[Mm]ousepad' , match_all = True )
+        print( search_result )
+
 
         # input pause for shutdown
         input( "Press ENTER to shutdown test" )
