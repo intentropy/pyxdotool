@@ -268,6 +268,8 @@ class XDoTool():
             - behave
             - windowraise
             - windowparent
+            - windowunmap
+            - set_window
 
         These are being skipped because it does not fit my
         personal use case for this module.  They will eventually be added in
@@ -398,6 +400,15 @@ class XDoTool():
         return _cmd(
             self.xdotool_cmd.format( **_xdotool_cmd )
             )
+    
+    def window_kill( self , window ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "windowkill"
+        _xdotool_cmd[ "args" ] = window
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
+
 
     # Desktop and Window Commands
     def window_activate( self , window , sync = True ):
