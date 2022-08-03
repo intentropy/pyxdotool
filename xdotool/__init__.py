@@ -342,6 +342,25 @@ class XDoTool():
         return _cmd(
             self.xdotool_cmd.format( **_xdotool_cmd )
             )
+
+    def window_move(
+        self,
+        window,         x,                  y,
+        sync = False,   relative = False,
+        ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "windowmove"
+        _options = []
+        if sync:
+            _options.append( "--sync" )
+        if relative:
+            _options.append( "--relative" )
+        _xdotool_cmd[ "options" ] = " ".join( _options )
+        _xdotool_cmd[ "args" ] = f"{window} {x} {y}"
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
+
         
 
 

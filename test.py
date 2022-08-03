@@ -26,6 +26,12 @@ if __name__ == '__main__':
         sleep( 3 )
         xdt.window_size( window , 200 , 200 )
         print( xdt.get_window_geometry(window))
+        sleep( 1 )
+        xdt.window_move(window , 40 , 40 , sync = True)
+        sleep( 1 )
+        xdt.window_move(window , 40 , 40 , sync = True , relative = True )
+        sleep( 1 )
+        xdt.window_move(window , 0 , 0 )
 
 
         # input pause for shutdown
