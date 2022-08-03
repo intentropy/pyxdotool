@@ -70,6 +70,18 @@ SPECIAL_KEYS = {
         'Up': 'Up',
         }
 
+MOUSE_BUTTONS = {
+    "left": 1,
+    "middle": 2,
+    "right": 3,
+    "wheel up": 4,
+    "wheel_up": 4,
+    "wheel-up": 4,
+    "wheel down": 5,
+    "wheel_down": 5,
+    "wheel-down": 5,
+    }
+
 
 
 # Internal Commands
@@ -112,6 +124,7 @@ class XDoTool():
         # Assing CONSTANTS as attributes
         self.SPECIAL_KEYS = SPECIAL_KEYS
         self.SPECIAL_CHARS = SPECIAL_CHARS
+        self.MOUSE_BUTTONS = MOUSE_BUTTONS
 
         # Command base string
         self.xdotool_cmd = "xdotool {command} {options} {args}"
@@ -200,7 +213,7 @@ class XDoTool():
         _xdotool_cmd[ "command" ] = "type"
         _xdotool_cmd[ "options" ] = self._key_opts()
         for arg in args:
-            _xdotool_cmd[ "args" ] = arg
+            _xdotool_cmd[ "args" ] = f"'{arg}'"
             _cmd(
                 self.xdotool_cmd.format( **_xdotool_cmd )
                 )
@@ -224,13 +237,16 @@ class XDoTool():
         x,              y,
         window = None,  screen = None,
         polar = False,  clearmodifiers = False, sync = False,
+        relative = False,
         ):
         _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
         _xdotool_cmd[ "command" ] = "mousemove"
+        if relative:
+            _xdotool_cmd[ "command" ] = "mousemove_relative"
         _options = []
-        if window is not None:
+        if window is not None and not relative:
             _options.append( f"--window {window}" )
-        if screen is not None:
+        if screen is not None and not relative:
             _options.append( f"--screen {screen}" )
         if polar:
             _options.append( "--polar" )
@@ -240,6 +256,39 @@ class XDoTool():
             _options.append( "--sync" )
         _xdotool_cmd[ "options" ] = " ".join( _options )
         _xdotool_cmd[ "args" ] = f"{x} {y}"
+        return _cmd(
+            self.xdotool_cmd.format( **_xdotool_cmd )
+            )
+
+    def click(
+        self,
+        button,
+        clearmodifiers = False,
+        repeat = None,          delay = None,   window = None,
+        ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "click"
+        _options = []
+        if clearmodifiers:
+            _options.append( "--clearmodifiers" )
+        if repeat is not None:
+            _options.append( f"--repeat {repeat}" )
+        if delay is not None:
+            _options.append( f"--delay {delay}" )
+        if window is not None:
+            _options.append( f"--window {window}" )
+        _xdotool_cmd[ "options" ] = " ".join( _options )
+        if type( button ) != int:
+            if not button.lower() in self.MOUSE_BUTTONS:
+                raise NonExistantMouseButton( f"Mouse button {button} is not valid" )
+            _button = self.MOUSE_BUTTONS.get(
+                button.lower()
+                )
+        else:
+            if button not in range( 1 , 5 ):
+                raise NonExistantMouseButton( f"Mouse button #{button} is not valid" )
+            _button = button
+        _xdotool_cmd[ "args" ] = _button
         return _cmd(
             self.xdotool_cmd.format( **_xdotool_cmd )
             )
