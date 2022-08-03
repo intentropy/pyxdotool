@@ -292,6 +292,26 @@ class XDoTool():
             stderr = False,
             )
 
+    def get_window_geometry( self , window ):
+        _xdotool_cmd = deepcopy( self.xdotool_cmd_fmt )
+        _xdotool_cmd[ "command" ] = "getwindowgeometry"
+        _xdotool_cmd[ "options" ] = "--shell"
+        _xdotool_cmd[ "args" ] = window
+        _cmd_ret = _cmd_out(
+            self.xdotool_cmd.format( **_xdotool_cmd ),
+            stderr = False,
+            ).split( "\n" )
+        _ret = {}
+        for line in _cmd_ret:
+            if line:
+                _line_split = line.split( "=" )
+                _ret[
+                    _line_split[ 0 ].lower()
+                    ] = _line_split[ 1 ]
+        return _ret
+        
+
+
 
 
     # Desktop and Window Commands

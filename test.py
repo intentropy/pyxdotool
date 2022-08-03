@@ -24,8 +24,10 @@ if __name__ == '__main__':
         window = xdt.get_active_window()
         pid = xdt.get_window_pid( window )
         name = xdt.get_window_name( window )
+        geo = xdt.get_window_geometry( window )
         print( pid )
         print( name )
+        print( geo )
 
         # input pause for shutdown
         input( "Press ENTER to shutdown test" )
